@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import json
-import requests
 
 from .models.group import Group
 from .models.lesson import Lesson
@@ -47,12 +46,7 @@ def get_json(html):
         json.dump(all_groups, file)
 
 
-def load_info():
-    resp = requests.get('https://live.1543.msk.ru/tt/school/').text
-    get_json(resp)
-
-
-def get_data():
+def get_data(data):
     current_time = int(time.time())
     time_interval = int(os.environ.get('TIME_INTERVAL'))
 
@@ -63,7 +57,7 @@ def get_data():
 
     if current_time - last_time >= time_interval:
         os.environ['LAST_TIME'] = str(current_time)
-        load_info()
+        get_json(data)
 
     with open('file.json', 'r') as file:
         data = json.load(file)

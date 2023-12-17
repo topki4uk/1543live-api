@@ -20,5 +20,6 @@ from main_app import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', urls.index),
     path('api/', include(urls))
 ]
